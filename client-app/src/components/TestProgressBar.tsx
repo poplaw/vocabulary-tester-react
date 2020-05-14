@@ -70,4 +70,6 @@ const TestProgressBar: ForwardRefExoticComponent<TestProgressBarProps> = forward
     );
 });
 
+TestProgressBar.displayName = "TestProgressBar";
+
 export default TestProgressBar;
