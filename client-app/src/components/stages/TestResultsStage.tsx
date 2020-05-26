@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import {
     Grid,
     Typography,
@@ -9,6 +9,15 @@ import {
 import PieChart from "../PieChart";
 import { PieChartSeries } from "../charts/PieChart";
 import { green, red } from "@material-ui/core/colors";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    getAmountOfPassed,
+    getAmountOfFailed,
+} from "../../store/currentTest/currentTestSlice";
+import {
+    applicationSlice,
+    ApplicationState,
+} from "../../store/application/applicationSlice";
 
 const useStyles = makeStyles((theme: Theme) => ({
     passed: {
@@ -108,6 +117,27 @@ const ResultsInfo: FC<ResultsInfoProps> = ({ correct, failed }) => {
 };
 
 const TestResultsStage: FC = () => {
+    const passed = useSelector(getAmountOfPassed);
+    const failed = useSelector(getAmountOfFailed);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const eventHandler = e => {
+            if (e.which === 13) {
+                dispatch(
+                    applicationSlice.actions.testStage(
+                        ApplicationState.DictionarySelection
+                    )
+                );
+            }
+        };
+
+        window.addEventListener("keypress", eventHandler);
+
+        return (): void => window.removeEventListener("keypress", eventHandler);
+    }, []);
+
     return (
         <Grid
             container
@@ -117,7 +147,7 @@ const TestResultsStage: FC = () => {
             style={{ height: "100%" }}
         >
             <Grid item style={{ width: "100%" }}>
-                <ResultsInfo correct={10} failed={5} />
+                <ResultsInfo correct={passed} failed={failed} />
             </Grid>
         </Grid>
     );

@@ -5,6 +5,7 @@ import {
     FormControl,
     InputLabel,
     Input,
+    InputProps,
 } from "@material-ui/core";
 import AutosizeInput from "react-input-autosize";
 
@@ -25,15 +26,11 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const TestInput: FC = () => {
+const TestInput: FC<InputProps> = ({ ...props }) => {
     const classes = useStyles();
-
-    const [value, setValue] = useState<string>("");
 
     return (
         <Input
-            value={value}
-            onChange={e => setValue(e.target.value)}
             classes={{
                 input: classes.autosizeComponent,
             }}
@@ -44,6 +41,7 @@ const TestInput: FC = () => {
             name="textmask"
             id="ffff"
             inputComponent={AutosizeInput}
+            {...props}
         />
 
         // <AutosizeInput value={value} onChange={e => setValue(e.target.value)} />
