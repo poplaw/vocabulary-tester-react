@@ -9,6 +9,7 @@ import {
     Grid,
     Hidden,
     ButtonProps,
+    Slide,
 } from "@material-ui/core";
 
 import {
@@ -77,24 +78,26 @@ const Topbar: FC = () => {
     const dictionarySize = useSelector(getDictionarySize);
 
     return (
-        <AppBar position="sticky" className={classes.topbar}>
-            <Toolbar>
-                <Grid item container alignItems="center">
-                    <Hidden xsDown>
-                        <Grid item sm xs></Grid>
-                    </Hidden>
-                    <Grid item xs={12} sm={4}>
-                        <TotalPairsInfo
-                            className={classes.totalPairsInfo}
-                            total={dictionarySize}
-                        />
+        <Slide in={true} direction="down">
+            <AppBar position="sticky" className={classes.topbar}>
+                <Toolbar>
+                    <Grid item container alignItems="center">
+                        <Hidden xsDown>
+                            <Grid item sm xs></Grid>
+                        </Hidden>
+                        <Grid item xs={12} sm={4}>
+                            <TotalPairsInfo
+                                className={classes.totalPairsInfo}
+                                total={dictionarySize}
+                            />
+                        </Grid>
+                        <Hidden xsDown>
+                            <Controls />
+                        </Hidden>
                     </Grid>
-                    <Hidden xsDown>
-                        <Controls />
-                    </Hidden>
-                </Grid>
-            </Toolbar>
-        </AppBar>
+                </Toolbar>
+            </AppBar>
+        </Slide>
     );
 };
 

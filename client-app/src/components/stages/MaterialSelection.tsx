@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid, Hidden, Fade } from "@material-ui/core";
 import VocabularyArea from "../VocabularyArea";
 import DictionaryEntry from "../../utils/DictionaryEntry";
 import { dictionarySlice } from "../../store/dictionary/dictionarySlice";
@@ -18,28 +18,32 @@ const MaterialSelection: FC = () => {
             <Hidden smDown>
                 <Grid item sm={3}></Grid>
             </Hidden>
-            <VocabularyArea
-                md={6}
-                xs={12}
-                value={rawMaterial}
-                onChange={(e): void => {
-                    dispatch(
-                        currentTestSlice.actions.setRawMaterial(e.target.value)
-                    );
-                    dispatch(dictionarySlice.actions.clear());
-                    e.target.value.split("\n").map((row: string) => {
-                        const pairArray: string[] = row.split(" - ");
+            <Fade in={true}>
+                <VocabularyArea
+                    md={6}
+                    xs={12}
+                    value={rawMaterial}
+                    onChange={(e): void => {
+                        dispatch(
+                            currentTestSlice.actions.setRawMaterial(
+                                e.target.value
+                            )
+                        );
+                        dispatch(dictionarySlice.actions.clear());
+                        e.target.value.split("\n").map((row: string) => {
+                            const pairArray: string[] = row.split(" - ");
 
-                        if (pairArray.length > 1) {
-                            const pair: DictionaryEntry = {
-                                first: pairArray[0],
-                                second: pairArray[1],
-                            };
-                            dispatch(dictionarySlice.actions.set(pair));
-                        }
-                    });
-                }}
-            />
+                            if (pairArray.length > 1) {
+                                const pair: DictionaryEntry = {
+                                    first: pairArray[0],
+                                    second: pairArray[1],
+                                };
+                                dispatch(dictionarySlice.actions.set(pair));
+                            }
+                        });
+                    }}
+                />
+            </Fade>
             <Hidden smDown>
                 <Grid item sm={3}></Grid>
             </Hidden>

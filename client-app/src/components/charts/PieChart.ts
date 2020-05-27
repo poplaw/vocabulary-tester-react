@@ -132,24 +132,28 @@ export class PieChart {
                     this.onSelectionChange(new PieChartSeriesNullObject());
             })
             .attr("fill", (d: PieArcDatum<PieChartSeries>) => d.data.getColor())
-            .attr("d", this.arc)
             .transition("" + Math.random())
             .ease(d3.easeCubicInOut)
             .duration(500)
             .attrTween("d", function arcTween(d: PieArcDatum<PieChartSeries>) {
-                const i = d3.interpolate<d3.PieArcDatum<PieChartSeries>>(
-                    this._current,
-                    d
-                );
-                this._current = i(0);
-                return function (t: number): string {
-                    return self.arc(i(t));
+                const originalEnd = d.endAngle;
+                return (t: number): string => {
+                    const angleInterpolation = d3.interpolate(
+                        self.pieGenerator.startAngle()(),
+                        self.pieGenerator.endAngle()()
+                    );
+                    const currentAngle = angleInterpolation(t);
+                    if (currentAngle < d.startAngle) {
+                        return "";
+                    }
+
+                    d.endAngle = Math.min(currentAngle, originalEnd);
+
+                    return self.arc(d);
                 };
             });
 
-        this.path
-            .merge(this.path)
-            .attr("d", (d: PieArcDatum<PieChartSeries>) => this.arc(d));
+        this.path.merge(this.path);
 
         if (!noTransition) {
             this.path
