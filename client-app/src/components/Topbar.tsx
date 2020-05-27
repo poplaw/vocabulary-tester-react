@@ -45,10 +45,6 @@ const TopbarButton: FC<TopbarButtonProps> = ({ children, icon, ...props }) => (
     </Button>
 );
 
-const ClearAllButton: FC = () => (
-    <TopbarButton icon={<Clear />}>Clear</TopbarButton>
-);
-
 const GoButton: FC = () => {
     const dispatch = useDispatch();
 
@@ -70,9 +66,6 @@ const GoButton: FC = () => {
 
 const Controls: FC = () => (
     <Grid item sm xs container justify="flex-end">
-        <Grid item>
-            <ClearAllButton />
-        </Grid>
         <Grid item>
             <GoButton />
         </Grid>
