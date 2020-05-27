@@ -10,6 +10,11 @@ import {
 import Topbar from "./Topbar";
 import Footer from "./Footer";
 import { grey, teal } from "@material-ui/core/colors";
+import {
+    getState,
+    ApplicationState,
+} from "../store/application/applicationSlice";
+import { useSelector } from "react-redux";
 
 const darkTheme = createMuiTheme({
     palette: {
@@ -19,31 +24,37 @@ const darkTheme = createMuiTheme({
     },
 });
 
-const Layout: FC = ({ children }) => (
-    <ThemeProvider theme={darkTheme}>
-        <Helmet>
-            <link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            />
-        </Helmet>
-        <CssBaseline />
-        <Grid
-            style={{ height: "100vh" }}
-            container
-            direction="column"
-            alignItems="stretch"
-            justify="space-between"
-        >
-            <Topbar />
-            <Grid item style={{ flex: 1 }}>
-                {children}
+const Layout: FC = ({ children }) => {
+    const appState = useSelector(getState);
+
+    return (
+        <ThemeProvider theme={darkTheme}>
+            <Helmet>
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                />
+            </Helmet>
+            <CssBaseline />
+            <Grid
+                style={{ height: "100vh" }}
+                container
+                direction="column"
+                alignItems="stretch"
+                justify="space-between"
+            >
+                {appState === ApplicationState.DictionarySelection && (
+                    <Topbar />
+                )}
+                <Grid item style={{ flex: 1 }}>
+                    {children}
+                </Grid>
+                <Grid item>
+                    <Footer />
+                </Grid>
             </Grid>
-            <Grid item>
-                <Footer />
-            </Grid>
-        </Grid>
-    </ThemeProvider>
-);
+        </ThemeProvider>
+    );
+};
 
 export default Layout;
