@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     closeTestButton: {
         position: "absolute",
         right: theme.spacing(1),
-        top: theme.spacing(1),
+        top: theme.spacing(4),
     },
 }));
 
@@ -84,15 +84,13 @@ const TestingStage: FC = () => {
 
     return (
         <>
-            <Slide in={true} direction="down">
-                <TestProgressBar value={passed + failed} max={total} />
-            </Slide>
             <Grid container style={{ height: "100%", position: "relative" }}>
-                <Hidden smDown>
-                    <Grid item sm={3}>
-                        <CloseTestButton onClick={(): void => quit()} />
-                    </Grid>
-                </Hidden>
+                <Grid sm={12}>
+                    <Slide in={true} direction="down">
+                        <TestProgressBar value={passed + failed} max={total} />
+                    </Slide>
+                </Grid>
+
                 <Grid
                     container
                     item
@@ -101,6 +99,9 @@ const TestingStage: FC = () => {
                     justify="center"
                     alignItems="center"
                 >
+                    <Hidden smDown>
+                        <CloseTestButton onClick={(): void => quit()} />
+                    </Hidden>
                     <Grid item>
                         <TestedPair
                             testedString={testedString}
