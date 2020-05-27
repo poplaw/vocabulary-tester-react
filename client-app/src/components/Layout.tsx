@@ -15,6 +15,7 @@ import {
     ApplicationState,
 } from "../store/application/applicationSlice";
 import { useSelector } from "react-redux";
+import Error from "./Error";
 
 const darkTheme = createMuiTheme({
     palette: {
@@ -36,6 +37,7 @@ const Layout: FC = ({ children }) => {
                 />
             </Helmet>
             <CssBaseline />
+            <Error />
             <Grid
                 style={{ height: "100vh" }}
                 container
