@@ -1,4 +1,9 @@
-import React, { FC, useState, forwardRef } from "react";
+import React, {
+    FC,
+    useState,
+    forwardRef,
+    ForwardRefExoticComponent,
+} from "react";
 import {
     TextField,
     makeStyles,
@@ -26,7 +31,10 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const TestInput: FC<InputProps> = ({ ...props }) => {
+const TestInput: ForwardRefExoticComponent<InputProps> = forwardRef<
+    Element,
+    InputProps
+>(({ ...props }, ref) => {
     const classes = useStyles();
 
     return (
@@ -41,11 +49,14 @@ const TestInput: FC<InputProps> = ({ ...props }) => {
             name="textmask"
             id="ffff"
             inputComponent={AutosizeInput}
+            inputRef={ref}
             {...props}
         />
 
         // <AutosizeInput value={value} onChange={e => setValue(e.target.value)} />
     );
-};
+});
+
+TestInput.displayName = "TestInput";
 
 export default TestInput;
