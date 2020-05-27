@@ -1,17 +1,5 @@
-import React, {
-    FC,
-    useState,
-    forwardRef,
-    ForwardRefExoticComponent,
-} from "react";
-import {
-    TextField,
-    makeStyles,
-    FormControl,
-    InputLabel,
-    Input,
-    InputProps,
-} from "@material-ui/core";
+import React, { forwardRef, ForwardRefExoticComponent } from "react";
+import { makeStyles, Input, InputProps } from "@material-ui/core";
 import AutosizeInput from "react-input-autosize";
 
 const useStyles = makeStyles(() => ({
@@ -52,8 +40,6 @@ const TestInput: ForwardRefExoticComponent<InputProps> = forwardRef<
             inputRef={ref}
             {...props}
         />
-
-        // <AutosizeInput value={value} onChange={e => setValue(e.target.value)} />
     );
 });
 
