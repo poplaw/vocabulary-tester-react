@@ -31,12 +31,10 @@ export const currentTestSlice = createSlice({
             state.currentKey = state.dictQueue.pop();
         },
 
-        clean: (state): void => {
-            state = {
-                ...initialState,
-                rawMaterial: state.rawMaterial,
-            };
-        },
+        clean: (state): CurrentTestState => ({
+            ...initialState,
+            rawMaterial: state.rawMaterial,
+        }),
 
         pass: (state, action: PayloadAction<string>): void => {
             state.passed.push(action.payload);
