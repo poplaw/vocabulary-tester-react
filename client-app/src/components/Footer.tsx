@@ -16,8 +16,10 @@ import { getApplicationName } from "../store/application/applicationSlice";
 const useStyles = makeStyles(() => ({
     footer: {
         top: "auto",
-        bottom: 0,
+        bottom: 50,
+        right: 50,
         borderRadius: "20px 20px",
+        position: "absolute",
     },
     appName: {
         marginLeft: "auto",
@@ -38,21 +40,26 @@ const AppName: FC<AppNameProps> = ({ style, className }) => {
 
     return (
         <Typography style={style} className={className}>
-            {appName} by Piotr Popławski @{year}
+            {appName}
         </Typography>
     );
 };
 
-const Footer: FC = () => {
+interface FooterProps {
+    style?: CSSProperties;
+}
+
+const Footer: FC<FooterProps> = ({ style }) => {
     const classes = useStyles();
 
     return (
         <Fade in={true} timeout={400}>
-            <AppBar className={classes.footer} position="static">
-                <Toolbar>
-                    <AppName className={classes.appName} />
-                </Toolbar>
-            </AppBar>
+            <div style={style} className={classes.footer}>
+                <AppName className={classes.appName} />
+                <Typography variant="body1" align="right">
+                    2020
+                </Typography>
+            </div>
         </Fade>
     );
 };
