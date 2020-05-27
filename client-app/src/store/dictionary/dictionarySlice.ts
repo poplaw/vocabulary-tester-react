@@ -14,7 +14,7 @@ export const dictionarySlice = createSlice({
     initialState: initialState,
     reducers: {
         set: (state, action: PayloadAction<DictionaryEntry>): void => {
-            state[action.payload.first] = action.payload.second;
+            state[action.payload.first.trim()] = action.payload.second.trim();
         },
         clear: (): DictionaryState => ({}),
     },
