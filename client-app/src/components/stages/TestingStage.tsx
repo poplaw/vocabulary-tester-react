@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useRef, useEffect, useLayoutEffect } from "react";
 import { Grid, Hidden, Slide } from "@material-ui/core";
 import TestProgressBar from "../TestProgressBar";
 import TestInput from "../TestInput";
@@ -18,16 +18,26 @@ import {
     applicationSlice,
     ApplicationState,
 } from "../../store/application/applicationSlice";
+import { RootState } from "../../store";
 
 const TestingStage: FC = () => {
     const passed = useSelector(getAmountOfPassed);
     const failed = useSelector(getAmountOfFailed);
     const total = useSelector(getDictionarySize);
     const testedString = useSelector(getTestedKey);
-    const answer = useSelector(state => state.dictionary[testedString]);
+    const answer = useSelector(
+        (state: RootState) => state.dictionary[testedString]
+    );
     const [variant, setVariant] = useState<Variant>(Variant.ExpectingAnswer);
     const [value, setValue] = useState<string>("");
     const dispatch = useDispatch();
+    const testInputRef = useRef<HTMLInputElement>();
+
+    useEffect(() => {
+        if (testInputRef.current) {
+            testInputRef.current.focus();
+        }
+    }, []);
 
     return (
         <>
@@ -55,6 +65,7 @@ const TestingStage: FC = () => {
                     </Grid>
                     <Grid item>
                         <TestInput
+                            ref={testInputRef}
                             value={value}
                             onChange={e => setValue(e.target.value)}
                             onKeyPress={e => {
