@@ -15,12 +15,9 @@ import {
     applicationSlice,
     ApplicationState,
 } from "../store/application/applicationSlice";
-import { Clear, ArrowRight } from "@material-ui/icons";
+import { Clear, ArrowRight, Receipt } from "@material-ui/icons";
 import TotalPairsInfo from "./TotalParisInfo";
-import {
-    getDictionarySize,
-    dictionarySlice,
-} from "../store/dictionary/dictionarySlice";
+import { getDictionarySize } from "../store/dictionary/dictionarySlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
     shuffleNewTest,
