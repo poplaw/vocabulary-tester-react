@@ -8,6 +8,7 @@ export interface CurrentTestState {
     currentKey: string;
     passed: string[];
     failed: string[];
+    rawMaterial: string;
 }
 
 const initialState: CurrentTestState = {
@@ -15,6 +16,7 @@ const initialState: CurrentTestState = {
     currentKey: null,
     passed: [],
     failed: [],
+    rawMaterial: "",
 };
 
 export const currentTestSlice = createSlice({
@@ -29,7 +31,12 @@ export const currentTestSlice = createSlice({
             state.currentKey = state.dictQueue.pop();
         },
 
-        clean: (): CurrentTestState => initialState,
+        clean: (state): void => {
+            state = {
+                ...initialState,
+                rawMaterial: state.rawMaterial,
+            };
+        },
 
         pass: (state, action: PayloadAction<string>): void => {
             state.passed.push(action.payload);
@@ -37,6 +44,10 @@ export const currentTestSlice = createSlice({
 
         fail: (state, action: PayloadAction<string>): void => {
             state.failed.push(action.payload);
+        },
+
+        setRawMaterial: (state, action: PayloadAction<string>): void => {
+            state.rawMaterial = action.payload;
         },
     },
 });
@@ -50,6 +61,8 @@ export const shuffleNewTest = (): AppThunk => async (dispatch, getState) => {
     dispatch(actions.setTestQueue(shuffledDictionary));
 };
 
+export const getRawMaterial = (store: RootState): string =>
+    store.currentTest.rawMaterial;
 export const getAmountOfPassed = (store: RootState): number =>
     store.currentTest.passed.length;
 export const getAmountOfFailed = (store: RootState): number =>
