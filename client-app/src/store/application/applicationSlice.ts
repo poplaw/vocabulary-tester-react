@@ -11,6 +11,7 @@ export const applicationSlice = createSlice({
     name: "application",
     initialState: {
         name: "Vocabulary tester",
+        version: "Alpha 0.1",
         state: ApplicationState.DictionarySelection,
     },
     reducers: {
@@ -26,6 +27,9 @@ export const applicationSlice = createSlice({
 
 export const getApplicationName = (state: RootState): string =>
     state.application.name;
+
+export const getAppVerison = (state: RootState): string =>
+    state.application.version;
 
 export const getState = (state: RootState): ApplicationState =>
     state.application.state;

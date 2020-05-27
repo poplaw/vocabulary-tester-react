@@ -11,7 +11,10 @@ import {
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/core/styles/withStyles";
 import { connect, useSelector } from "react-redux";
-import { getApplicationName } from "../store/application/applicationSlice";
+import {
+    getApplicationName,
+    getAppVerison,
+} from "../store/application/applicationSlice";
 
 const useStyles = makeStyles(() => ({
     footer: {
@@ -51,13 +54,14 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = ({ style }) => {
     const classes = useStyles();
+    const version = useSelector(getAppVerison);
 
     return (
         <Fade in={true} timeout={400}>
             <div style={style} className={classes.footer}>
                 <AppName className={classes.appName} />
                 <Typography variant="body1" align="right">
-                    2020
+                    {version}
                 </Typography>
             </div>
         </Fade>
