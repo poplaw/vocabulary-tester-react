@@ -1,5 +1,22 @@
-import React, { FC, useState, useRef, useEffect, useLayoutEffect } from "react";
-import { Grid, Hidden, Slide } from "@material-ui/core";
+import React, {
+    FC,
+    useState,
+    useRef,
+    useEffect,
+    useLayoutEffect,
+    useCallback,
+} from "react";
+import {
+    Grid,
+    Hidden,
+    Slide,
+    Button,
+    IconButton,
+    makeStyles,
+    Theme,
+    IconButtonProps,
+} from "@material-ui/core";
+import { Close } from "@material-ui/icons";
 import TestProgressBar from "../TestProgressBar";
 import TestInput from "../TestInput";
 import TestedPair, { Variant } from "../TestedPair";
@@ -20,6 +37,23 @@ import {
 } from "../../store/application/applicationSlice";
 import { RootState } from "../../store";
 
+const useStyles = makeStyles((theme: Theme) => ({
+    closeTestButton: {
+        position: "absolute",
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+    },
+}));
+
+const CloseTestButton: FC<IconButtonProps> = ({ ...props }) => {
+    const classes = useStyles();
+    return (
+        <IconButton className={classes.closeTestButton} {...props}>
+            <Close />
+        </IconButton>
+    );
+};
+
 const TestingStage: FC = () => {
     const passed = useSelector(getAmountOfPassed);
     const failed = useSelector(getAmountOfFailed);
@@ -33,6 +67,15 @@ const TestingStage: FC = () => {
     const dispatch = useDispatch();
     const testInputRef = useRef<HTMLInputElement>();
 
+    const quit = useCallback(() => {
+        dispatch(currentTestSlice.actions.clean());
+        dispatch(
+            applicationSlice.actions.testStage(
+                ApplicationState.DictionarySelection
+            )
+        );
+    }, []);
+
     useEffect(() => {
         if (testInputRef.current) {
             testInputRef.current.focus();
@@ -44,9 +87,11 @@ const TestingStage: FC = () => {
             <Slide in={true} direction="down">
                 <TestProgressBar value={passed + failed} max={total} />
             </Slide>
-            <Grid container style={{ height: "100%" }}>
+            <Grid container style={{ height: "100%", position: "relative" }}>
                 <Hidden smDown>
-                    <Grid item sm={3}></Grid>
+                    <Grid item sm={3}>
+                        <CloseTestButton onClick={(): void => quit()} />
+                    </Grid>
                 </Hidden>
                 <Grid
                     container
