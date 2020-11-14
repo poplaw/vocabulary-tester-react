@@ -1,0 +1,6 @@
+version: "3"
+services:
+    client-app:
+        build: ./client-app
+        ports:
+            - "5466:80"
