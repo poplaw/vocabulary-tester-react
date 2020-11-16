@@ -6,9 +6,11 @@ import {
     useTheme,
     createMuiTheme,
     ThemeProvider,
+    makeStyles,
 } from "@material-ui/core";
 import Topbar from "./Topbar";
 import Footer from "./Footer";
+import prismImg from "../images/prism.png";
 import { grey, teal } from "@material-ui/core/colors";
 import {
     getState,
@@ -25,21 +27,29 @@ const darkTheme = createMuiTheme({
     },
 });
 
+const useStyles = makeStyles(() => ({
+    grid: {
+        height: "100vh",
+        backgroundImage: `url("${prismImg}")`,
+    },
+}));
+
+import { getApplicationName } from "../store/application/applicationSlice";
+
 const Layout: FC = ({ children }) => {
     const appState = useSelector(getState);
+    const styles = useStyles();
+    const appName = useSelector(getApplicationName);
 
     return (
         <ThemeProvider theme={darkTheme}>
             <Helmet>
-                <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
-                />
+                <title>{appName}</title>
             </Helmet>
             <CssBaseline />
             <Error />
             <Grid
-                style={{ height: "100vh" }}
+                className={styles.grid}
                 container
                 direction="column"
                 alignItems="stretch"
