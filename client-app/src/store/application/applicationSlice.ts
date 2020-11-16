@@ -11,7 +11,7 @@ export const applicationSlice = createSlice({
     name: "application",
     initialState: {
         name: "Vocabulary Tester",
-        version: "Alpha 0.1",
+        version: "Alpha 0.2",
         state: ApplicationState.DictionarySelection,
     },
     reducers: {
