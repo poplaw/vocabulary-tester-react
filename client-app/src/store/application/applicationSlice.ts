@@ -10,7 +10,7 @@ export enum ApplicationState {
 export const applicationSlice = createSlice({
     name: "application",
     initialState: {
-        name: "Vocabulary tester",
+        name: "Vocabulary Tester",
         version: "Alpha 0.1",
         state: ApplicationState.DictionarySelection,
     },
