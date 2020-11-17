@@ -10,6 +10,7 @@ import {
     Hidden,
     ButtonProps,
     Slide,
+    Theme,
 } from "@material-ui/core";
 
 import {
@@ -27,17 +28,27 @@ import {
     shuffleNewTest,
     currentTestSlice,
 } from "../store/currentTest/currentTestSlice";
+import Hex2Rgb from "../utils/Hex2Rgb";
 
-const useStyles = makeStyles(() => ({
-    totalPairsInfo: {
-        letterSpacing: "2px",
-        textTransform: "uppercase",
-        textAlign: "center",
-    },
-    topbar: {
-        // borderRadius: "20px 20px",
-    },
-}));
+const useStyles = makeStyles((theme: Theme) => {
+    const color = theme.palette.primary.dark;
+    const [r, g, b] = Hex2Rgb(color);
+
+    return {
+        totalPairsInfo: {
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+            textAlign: "center",
+        },
+        topbar: {
+            // borderRadius: "20px 20px",
+        },
+        root: {
+            backdropFilter: "blur(5px)",
+            backgroundColor: `rgba(${r}, ${g}, ${b}, 0.5)`,
+        },
+    };
+});
 
 interface TopbarButtonProps extends ButtonProps {
     icon: ReactElement<SvgIconProps>;
@@ -101,7 +112,11 @@ const Topbar: FC = () => {
 
     return (
         <Slide in={true} direction="down">
-            <AppBar position="sticky" className={classes.topbar}>
+            <AppBar
+                position="sticky"
+                className={classes.topbar}
+                classes={{ root: classes.root }}
+            >
                 <Toolbar>
                     <Grid item container alignItems="center">
                         <Hidden xsDown>
