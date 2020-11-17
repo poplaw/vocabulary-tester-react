@@ -1,5 +1,13 @@
 import React, { FC, useState, TextareaHTMLAttributes } from "react";
-import { Grid, GridProps, Paper, makeStyles } from "@material-ui/core";
+import {
+    Grid,
+    GridProps,
+    Paper,
+    makeStyles,
+    Slide,
+    Zoom,
+    Grow,
+} from "@material-ui/core";
 
 type VocabularyAreaProps =
     | GridProps
@@ -35,13 +43,15 @@ const VocabularyArea: FC<VocabularyAreaProps> = ({
     const classes = useStyles();
     return (
         <Grid item lg={lg} md={md} sm={sm} xl={xl} xs={xs}>
-            <Paper className={classes.root}>
-                <textarea
-                    placeholder="Paste here your material to memorize..."
-                    className={classes.textArea}
-                    {...props}
-                ></textarea>
-            </Paper>
+            <Grow in={true}>
+                <Paper className={classes.root}>
+                    <textarea
+                        placeholder="Paste here your material to memorize..."
+                        className={classes.textArea}
+                        {...props}
+                    ></textarea>
+                </Paper>
+            </Grow>
         </Grid>
     );
 };
