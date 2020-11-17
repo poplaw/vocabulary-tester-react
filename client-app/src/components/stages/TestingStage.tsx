@@ -1,58 +1,22 @@
-import React, {
-    FC,
-    useState,
-    useRef,
-    useEffect,
-    useLayoutEffect,
-    useCallback,
-} from "react";
-import {
-    Grid,
-    Hidden,
-    Slide,
-    Button,
-    IconButton,
-    makeStyles,
-    Theme,
-    IconButtonProps,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import React, { FC, useState, useRef, useEffect } from "react";
+import { Grid, Hidden, Slide } from "@material-ui/core";
 import TestProgressBar from "../TestProgressBar";
 import TestInput from "../TestInput";
 import TestedPair, { Variant } from "../TestedPair";
-import currentTest, {
+import {
     getAmountOfPassed,
     getAmountOfFailed,
     getTestedKey,
     currentTestSlice,
 } from "../../store/currentTest/currentTestSlice";
 import { useSelector, useDispatch } from "react-redux";
-import {
-    getDictionarySize,
-    getAnswer,
-} from "../../store/dictionary/dictionarySlice";
+import { getDictionarySize } from "../../store/dictionary/dictionarySlice";
 import {
     applicationSlice,
     ApplicationState,
 } from "../../store/application/applicationSlice";
 import { RootState } from "../../store";
-
-const useStyles = makeStyles((theme: Theme) => ({
-    closeTestButton: {
-        position: "absolute",
-        right: theme.spacing(1),
-        top: theme.spacing(4),
-    },
-}));
-
-const CloseTestButton: FC<IconButtonProps> = ({ ...props }) => {
-    const classes = useStyles();
-    return (
-        <IconButton className={classes.closeTestButton} {...props}>
-            <Close />
-        </IconButton>
-    );
-};
+import GoBackButton from "../GoBackButton";
 
 const TestingStage: FC = () => {
     const passed = useSelector(getAmountOfPassed);
@@ -66,15 +30,6 @@ const TestingStage: FC = () => {
     const [value, setValue] = useState<string>("");
     const dispatch = useDispatch();
     const testInputRef = useRef<HTMLInputElement>();
-
-    const quit = useCallback(() => {
-        dispatch(currentTestSlice.actions.clean());
-        dispatch(
-            applicationSlice.actions.testStage(
-                ApplicationState.DictionarySelection
-            )
-        );
-    }, []);
 
     useEffect(() => {
         if (testInputRef.current) {
@@ -91,6 +46,7 @@ const TestingStage: FC = () => {
                     </Slide>
                 </Grid>
 
+                <GoBackButton />
                 <Grid
                     container
                     item
@@ -99,9 +55,6 @@ const TestingStage: FC = () => {
                     justify="center"
                     alignItems="center"
                 >
-                    <Hidden smDown>
-                        <CloseTestButton onClick={(): void => quit()} />
-                    </Hidden>
                     <Grid item>
                         <TestedPair
                             testedString={testedString}
