@@ -5,6 +5,7 @@ import {
     TypographyProps,
     makeStyles,
     Theme,
+    Hidden,
 } from "@material-ui/core";
 import PieChart from "../PieChart";
 import { PieChartSeries } from "../charts/PieChart";
@@ -18,6 +19,7 @@ import {
     applicationSlice,
     ApplicationState,
 } from "../../store/application/applicationSlice";
+import GoBackButton from "../GoBackButton";
 
 const useStyles = makeStyles((theme: Theme) => ({
     passed: {
@@ -146,6 +148,7 @@ const TestResultsStage: FC = () => {
             justify="center"
             style={{ height: "100%" }}
         >
+            <GoBackButton />
             <Grid item style={{ width: "100%" }}>
                 <ResultsInfo correct={passed} failed={failed} />
             </Grid>
