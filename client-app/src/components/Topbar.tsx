@@ -18,7 +18,10 @@ import {
 } from "../store/application/applicationSlice";
 import { Clear, ArrowRight, Receipt } from "@material-ui/icons";
 import TotalPairsInfo from "./TotalParisInfo";
-import { getDictionarySize } from "../store/dictionary/dictionarySlice";
+import {
+    dictionarySlice,
+    getDictionarySize,
+} from "../store/dictionary/dictionarySlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
     shuffleNewTest,
@@ -46,6 +49,22 @@ const TopbarButton: FC<TopbarButtonProps> = ({ children, icon, ...props }) => (
     </Button>
 );
 
+const ClearAllButton: FC = () => {
+    const dispatch = useDispatch();
+
+    return (
+        <TopbarButton
+            icon={<Clear />}
+            onClick={() => {
+                dispatch(dictionarySlice.actions.clear());
+                dispatch(currentTestSlice.actions.clearRaw());
+            }}
+        >
+            Clear All
+        </TopbarButton>
+    );
+};
+
 const GoButton: FC = () => {
     const dispatch = useDispatch();
 
@@ -67,6 +86,9 @@ const GoButton: FC = () => {
 
 const Controls: FC = () => (
     <Grid item sm xs container justify="flex-end">
+        <Grid item>
+            <ClearAllButton />
+        </Grid>
         <Grid item>
             <GoButton />
         </Grid>
