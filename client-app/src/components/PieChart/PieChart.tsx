@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
             fontSize: "16px",
             fill: theme.palette.text.primary,
         },
+        filter: "drop-shadow(7px 15px 7px rgba(0, 0, 0, 0.75))",
     },
 }));
 
