@@ -36,6 +36,10 @@ export const currentTestSlice = createSlice({
             rawMaterial: state.rawMaterial,
         }),
 
+        clearRaw: (): CurrentTestState => ({
+            ...initialState,
+        }),
+
         pass: (state, action: PayloadAction<string>): void => {
             state.passed.push(action.payload);
         },
