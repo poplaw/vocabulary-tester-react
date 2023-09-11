@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {} from "../dictionary/dictionarySlice";
-import { RootState, AppThunk } from "..";
+import { AppThunk, RootState } from "..";
 import * as d3 from "d3";
 
 export interface CurrentTestState {
@@ -65,10 +64,10 @@ export const shuffleNewTest = (): AppThunk => async (dispatch, getState) => {
 
 export const getRawMaterial = (store: RootState): string =>
     store.currentTest.rawMaterial;
-export const getAmountOfPassed = (store: RootState): number =>
-    store.currentTest.passed.length;
-export const getAmountOfFailed = (store: RootState): number =>
-    store.currentTest.failed.length;
+export const getPassed = (store: RootState): string[] =>
+    store.currentTest.passed;
+export const getFailed = (store: RootState): string[] =>
+    store.currentTest.failed;
 export const getTestedKey = (store: RootState): string =>
     store.currentTest.currentKey;
 

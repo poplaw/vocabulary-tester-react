@@ -1,17 +1,10 @@
-import React, { FC, useState, TextareaHTMLAttributes } from "react";
+import React, { FC, TextareaHTMLAttributes } from "react";
 import Hex2Rgb from "../utils/Hex2Rgb";
-import {
-    Grid,
-    GridProps,
-    Paper,
-    makeStyles,
-    Grow,
-    Theme,
-} from "@material-ui/core";
+import { Grid, GridProps, Grow, makeStyles, Paper, Theme } from "@material-ui/core";
 
-type VocabularyAreaProps =
-    | GridProps
-    | TextareaHTMLAttributes<HTMLTextAreaElement>;
+type VocabularyAreaProps = GridProps & {
+    textAreaProps: TextareaHTMLAttributes<HTMLTextAreaElement>;
+};
 
 const useStyles = makeStyles((theme: Theme) => {
     const color = theme.palette.background.paper;
@@ -40,22 +33,18 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 const VocabularyArea: FC<VocabularyAreaProps> = ({
-    lg,
-    md,
-    sm,
-    xl,
-    xs,
+    textAreaProps,
     ...props
 }) => {
     const classes = useStyles();
     return (
-        <Grid item lg={lg} md={md} sm={sm} xl={xl} xs={xs}>
+        <Grid {...props}>
             <Grow in={true}>
                 <Paper className={classes.root}>
                     <textarea
                         placeholder="Paste here your material to memorize..."
                         className={classes.textArea}
-                        {...props}
+                        {...textAreaProps}
                     ></textarea>
                 </Paper>
             </Grow>

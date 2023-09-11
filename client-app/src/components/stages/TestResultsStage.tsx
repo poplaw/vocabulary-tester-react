@@ -1,25 +1,25 @@
 import React, { FC, useEffect } from "react";
 import {
     Grid,
-    Typography,
-    TypographyProps,
+    List,
+    ListItem,
+    ListItemText,
     makeStyles,
     Theme,
-    Hidden,
+    Typography,
+    TypographyProps,
 } from "@material-ui/core";
 import PieChart from "../PieChart";
 import { PieChartSeries } from "../charts/PieChart";
 import { green, red } from "@material-ui/core/colors";
-import { useSelector, useDispatch } from "react-redux";
-import {
-    getAmountOfPassed,
-    getAmountOfFailed,
-} from "../../store/currentTest/currentTestSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getFailed, getPassed } from "../../store/currentTest/currentTestSlice";
 import {
     applicationSlice,
     ApplicationState,
 } from "../../store/application/applicationSlice";
 import GoBackButton from "../GoBackButton";
+import { getAnswer } from "../../store/dictionary/dictionarySlice";
 
 const useStyles = makeStyles((theme: Theme) => ({
     passed: {
@@ -79,15 +79,17 @@ const ResultCaption: FC<ResultCaptionProps> = ({
 };
 
 interface ResultsInfoProps {
-    correct: number;
-    failed: number;
+    correct: string[];
+    failed: string[];
 }
 
 const ResultsInfo: FC<ResultsInfoProps> = ({ correct, failed }) => {
     const data: PieChartSeries[] = [
-        new PieChartSeries(green[500], correct, "Passed"),
-        new PieChartSeries(red[500], failed, "Failed"),
+        new PieChartSeries(green[500], correct.length, "Passed"),
+        new PieChartSeries(red[500], failed.length, "Failed"),
     ];
+
+    const dictionary = useSelector(getAnswer);
 
     return (
         <Grid
@@ -97,30 +99,79 @@ const ResultsInfo: FC<ResultsInfoProps> = ({ correct, failed }) => {
             alignItems="center"
             justify="space-evenly"
         >
-            <Grid item>
-                <ResultCaption type={ResultCaptionType.Failed} value={failed}>
+            <Grid
+                item
+                sm={4}
+                container
+                alignItems={"center"}
+                direction={"column"}
+                style={{
+                    overflowY: "scroll",
+                    maxHeight: "100vh",
+                    paddingTop: "100px",
+                    paddingBottom: "100px",
+                }}
+            >
+                <ResultCaption
+                    type={ResultCaptionType.Failed}
+                    value={failed.length}
+                >
                     Failed
                 </ResultCaption>
+                <List>
+                    {failed.map((word, index) => (
+                        <ListItem key={index}>
+                            <ListItemText
+                                primary={word}
+                                secondary={dictionary[word]}
+                            />
+                        </ListItem>
+                    ))}
+                </List>
             </Grid>
-            <Grid item>
+            <Grid item alignItems={"center"} direction={"column"}>
                 <PieChart
                     margin={{ left: 10, right: 10, top: 10, bottom: 10 }}
                     data={data}
                     onCurrentSelectionChange={null}
                 />
             </Grid>
-            <Grid item>
-                <ResultCaption type={ResultCaptionType.Passed} value={correct}>
+            <Grid
+                item
+                sm={4}
+                alignItems={"center"}
+                direction={"column"}
+                style={{
+                    overflowY: "scroll",
+                    maxHeight: "100vh",
+                    paddingTop: "100px",
+                    paddingBottom: "100px",
+                }}
+            >
+                <ResultCaption
+                    type={ResultCaptionType.Passed}
+                    value={correct.length}
+                >
                     Passed
                 </ResultCaption>
+                <List>
+                    {correct.map((word, index) => (
+                        <ListItem key={index}>
+                            <ListItemText
+                                primary={word}
+                                secondary={dictionary[word]}
+                            />
+                        </ListItem>
+                    ))}
+                </List>
             </Grid>
         </Grid>
     );
 };
 
 const TestResultsStage: FC = () => {
-    const passed = useSelector(getAmountOfPassed);
-    const failed = useSelector(getAmountOfFailed);
+    const passed = useSelector(getPassed);
+    const failed = useSelector(getFailed);
 
     const dispatch = useDispatch();
 

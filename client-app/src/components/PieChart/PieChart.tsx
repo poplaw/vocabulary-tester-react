@@ -1,11 +1,11 @@
 import Margin from "../charts/utils/Margin";
 import {
     PieChart,
-    PieChartSeriesNullObject,
     PieChartSeries,
+    PieChartSeriesNullObject,
 } from "../charts/PieChart";
 
-import React, { FC, useState, useEffect, useRef, useCallback } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import ReactResizeDetector from "react-resize-detector";
 import numeral from "numeral";
 
@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
 interface PieChartProps {
     margin: Margin;
     data: PieChartSeries[];
-    style: CSSProperties;
-    valueFieldFormatting: string;
+    style?: CSSProperties;
+    valueFieldFormatting?: string;
     onCurrentSelectionChange: any;
 }
 
@@ -46,14 +46,14 @@ const PieChartComponent: FC<PieChartProps> = ({
     const [size, setSize] = useState(400);
     const chart = useRef<PieChart>(new PieChart(size, margin));
 
+    const [currentSelection, setCurrentSelection] = useState<PieChartSeries>(
+        new PieChartSeriesNullObject()
+    );
+
     useEffect(() => {
         chart.current.onSelectionChange = (e: PieChartSeries) =>
             setCurrentSelection(e);
     }, []);
-
-    const [currentSelection, setCurrentSelection] = useState<PieChartSeries>(
-        new PieChartSeriesNullObject()
-    );
 
     useEffect(() => {
         if (chartArea.current === null || props.data.length === 0) return;

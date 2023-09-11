@@ -1,20 +1,20 @@
 import React, { FC } from "react";
 import { Helmet } from "react-helmet";
 import {
+    createMuiTheme,
     CssBaseline,
     Grid,
-    useTheme,
-    createMuiTheme,
-    ThemeProvider,
     makeStyles,
+    ThemeProvider,
 } from "@material-ui/core";
 import Topbar from "./Topbar";
 import Footer from "./Footer";
 import prismImg from "../images/prism.png";
-import { grey, teal, green } from "@material-ui/core/colors";
+import { grey, teal } from "@material-ui/core/colors";
 import {
-    getState,
     ApplicationState,
+    getApplicationName,
+    getState,
 } from "../store/application/applicationSlice";
 import { useSelector } from "react-redux";
 import Error from "./Error";
@@ -33,8 +33,6 @@ const useStyles = makeStyles(() => ({
         backgroundImage: `url("${prismImg}")`,
     },
 }));
-
-import { getApplicationName } from "../store/application/applicationSlice";
 
 const Layout: FC = ({ children }) => {
     const appState = useSelector(getState);

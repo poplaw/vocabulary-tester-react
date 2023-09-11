@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { Grid, Typography, makeStyles, Zoom } from "@material-ui/core";
-import { CSSProperties } from "@material-ui/core/styles/withStyles";
-import { red, green } from "@material-ui/core/colors";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { green, red } from "@material-ui/core/colors";
 
 export enum Variant {
     ExpectingAnswer,
@@ -54,6 +53,7 @@ const TestedPair: FC<TestedPairProps> = ({
             direction="row"
             alignItems="center"
             justify="center"
+            style={{ maxWidth: "90vw" }}
         >
             <Grid item>
                 <Typography
