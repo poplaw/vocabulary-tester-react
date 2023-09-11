@@ -53,8 +53,9 @@ const TestedPair: FC<TestedPairProps> = ({
             direction="row"
             alignItems="center"
             justify="center"
+            style={{ maxWidth: "90vw" }}
         >
-            <Grid item sm={9}>
+            <Grid item>
                 <Typography
                     component="span"
                     variant="h3"

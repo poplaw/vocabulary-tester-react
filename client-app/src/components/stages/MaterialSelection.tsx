@@ -32,7 +32,9 @@ const MaterialSelection: FC = () => {
                             );
                             dispatch(dictionarySlice.actions.clear());
                             e.target.value.split("\n").map((row: string) => {
-                                const pairArray: string[] = row.split(" - ");
+                                const pairArray: string[] = row.split(
+                                    /\s-\s(.*)/s
+                                );
 
                                 if (pairArray.length > 1) {
                                     const pair: DictionaryEntry = {
