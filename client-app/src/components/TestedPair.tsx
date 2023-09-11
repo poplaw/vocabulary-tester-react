@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { Grid, Typography, makeStyles, Zoom } from "@material-ui/core";
-import { CSSProperties } from "@material-ui/core/styles/withStyles";
-import { red, green } from "@material-ui/core/colors";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { green, red } from "@material-ui/core/colors";
 
 export enum Variant {
     ExpectingAnswer,
@@ -55,7 +54,7 @@ const TestedPair: FC<TestedPairProps> = ({
             alignItems="center"
             justify="center"
         >
-            <Grid item>
+            <Grid item sm={9}>
                 <Typography
                     component="span"
                     variant="h3"
