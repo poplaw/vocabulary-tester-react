@@ -1,15 +1,15 @@
-import React, { FC, useState, useRef, useEffect } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Grid, Hidden, Slide } from "@material-ui/core";
 import TestProgressBar from "../TestProgressBar";
 import TestInput from "../TestInput";
 import TestedPair, { Variant } from "../TestedPair";
 import {
-    getAmountOfPassed,
-    getAmountOfFailed,
-    getTestedKey,
     currentTestSlice,
+    getFailed,
+    getPassed,
+    getTestedKey,
 } from "../../store/currentTest/currentTestSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDictionarySize } from "../../store/dictionary/dictionarySlice";
 import {
     applicationSlice,
@@ -19,8 +19,8 @@ import { RootState } from "../../store";
 import GoBackButton from "../GoBackButton";
 
 const TestingStage: FC = () => {
-    const passed = useSelector(getAmountOfPassed);
-    const failed = useSelector(getAmountOfFailed);
+    const passed = useSelector(getPassed);
+    const failed = useSelector(getFailed);
     const total = useSelector(getDictionarySize);
     const testedString = useSelector(getTestedKey);
     const answer = useSelector(
@@ -42,7 +42,10 @@ const TestingStage: FC = () => {
             <Grid container style={{ height: "100%", position: "relative" }}>
                 <Grid sm={12}>
                     <Slide in={true} direction="down">
-                        <TestProgressBar value={passed + failed} max={total} />
+                        <TestProgressBar
+                            value={passed.length + failed.length}
+                            max={total}
+                        />
                     </Slide>
                 </Grid>
 
@@ -87,7 +90,10 @@ const TestingStage: FC = () => {
                                         }
                                     } else {
                                         setValue("");
-                                        if (passed + failed < total) {
+                                        if (
+                                            passed.length + failed.length <
+                                            total
+                                        ) {
                                             setVariant(Variant.ExpectingAnswer);
                                             dispatch(
                                                 currentTestSlice.actions.fetchNext()
