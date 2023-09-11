@@ -1,9 +1,7 @@
 import React, {
-    FC,
-    useCallback,
-    ForwardRefRenderFunction,
     forwardRef,
     ForwardRefExoticComponent,
+    useCallback,
 } from "react";
 import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
@@ -39,7 +37,7 @@ interface TestProgressBarProps {
 }
 
 const TestProgressBar: ForwardRefExoticComponent<TestProgressBarProps> = forwardRef<
-    Element,
+    HTMLDivElement,
     TestProgressBarProps
 >(({ value, max, style }, ref) => {
     const classes = useStyles();

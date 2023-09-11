@@ -1,7 +1,7 @@
 import * as d3 from "d3";
+import { PieArcDatum } from "d3";
 import Margin from "./utils/Margin";
 import styles from "../PieChart/PieChart.module.css";
-import { PieArcDatum } from "d3";
 
 export class PieChartSeries {
     private color: string;
@@ -33,6 +33,7 @@ export class PieChartSeriesNullObject extends PieChartSeries {
     }
 
     getCaption = (): string => "";
+
     getValue(): number {
         return 0;
     }
@@ -139,7 +140,11 @@ export class PieChart {
                 const originalEnd = d.endAngle;
                 return (t: number): string => {
                     const angleInterpolation = d3.interpolate(
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
                         self.pieGenerator.startAngle()(),
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                        // @ts-ignore
                         self.pieGenerator.endAngle()()
                     );
                     const currentAngle = angleInterpolation(t);
